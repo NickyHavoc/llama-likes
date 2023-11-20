@@ -1,0 +1,27 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "llama-likes"
+version = "0.1.0"
+description = ""
+authors = ["niklas <niklasfinken@me.com>"]
+readme = "README.md"
+packages = [{include = "llama_likes"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openai = "^1.3.3"
+pydantic = "^2.5.1"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.6.1"
+pytest = "*"
+black = "*"
+pre-commit = "*"
+
+[tool.mypy]
+files = "src,tests"
+strict = "True"
