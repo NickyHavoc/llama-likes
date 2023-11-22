@@ -6,9 +6,8 @@ import openai
 from dotenv import load_dotenv
 from openai.types.chat import ChatCompletion
 
-from llama_likes.core import Completion, PreferenceError, PreferenceResult
-
-from .build_openai_prompt import OPENAI_PAYOFF_LABELS, build_openai_prompt
+from .core.core import Completion, PreferenceError, PreferenceResult
+from .openai.build_openai_prompt import OPENAI_PAYOFF_LABELS, build_openai_prompt
 
 load_dotenv()
 

@@ -1,6 +1,6 @@
 from typing import Mapping, Sequence
 
-from llama_likes.core import PayoffLabels
+from llama_likes.core.core import PayoffLabels
 
 OPENAI_PAYOFF_LABELS = PayoffLabels(
     player_a_wins="completion_a",
