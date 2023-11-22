@@ -4,4 +4,5 @@ from .core.core import PayoffLabels as PayoffLabels
 from .core.core import PreferenceError as PreferenceError
 from .core.core import PreferenceResult as PreferenceResult
 from .elo import Elo as Elo
+from .elo import elo_simulation as elo_simulation
 from .ranker import OpenAiRanker as OpenAiRanker
