@@ -8,7 +8,7 @@ version = "0.1.0"
 description = ""
 authors = ["niklas <niklasfinken@me.com>"]
 readme = "README.md"
-packages = [{include = "llama_likes"}]
+packages = [{from="src", include = "llama_likes"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -25,3 +25,7 @@ pre-commit = "*"
 [tool.mypy]
 files = "src,tests"
 strict = "True"
+
+[tool.pytest.ini_options]
+markers = ["internal: marks tests as internal (deselect with '-k \"not internal\"')"]
+addopts = "--capture=tee-sys"
