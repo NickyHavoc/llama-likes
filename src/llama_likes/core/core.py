@@ -1,5 +1,6 @@
+from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Any, Mapping, Optional, Sequence
+from typing import Any, Mapping, Optional, Sequence, Union
 
 from pydantic import BaseModel
 
@@ -21,6 +22,9 @@ class PayoffLabels(BaseModel):
     player_b_wins: str
     json_key: str
 
+    def _labels(self) -> Sequence[str]:
+        return [self.player_a_wins, self.player_a_wins, self.draw]
+
     def _payoff_map(self) -> Mapping[str, Payoff]:
         return {
             self.player_a_wins: Payoff.PLAYER_A_WINS,
@@ -28,8 +32,12 @@ class PayoffLabels(BaseModel):
             self.player_b_wins: Payoff.PLAYER_B_WINS,
         }
 
-    def get_payoff(self, generated_json: Mapping[str, str]) -> Payoff:
+    def payoff_from_json(self, generated_json: Mapping[str, str]) -> Payoff:
         payoff_key = generated_json[self.json_key]
+        return self._payoff_map()[payoff_key]
+
+    def payoff_from_string(self, string: str) -> Payoff:
+        payoff_key = next(label for label in self._labels() if label in string)
         return self._payoff_map()[payoff_key]
 
 
@@ -42,3 +50,11 @@ class PreferenceResult(BaseModel):
     completion_a: Completion
     completion_b: Completion
     payoff: Payoff
+
+
+class Ranker(ABC):
+    @abstractmethod
+    def rank(
+        self, instruction: str, completion_a: Completion, completion_b: Completion
+    ) -> Union[PreferenceResult, PreferenceError]:
+        ...

@@ -18,7 +18,6 @@ Consider the following points when ranking the completions:
 - Creativity (if desired)
 
 If a completion ends abruptly (mid-sentence), consider how good it was until it ended. Do not deduct points for this!
-Make sure that your preferences are logical. For example, if the completions are equally good, they must get the same score!
 
 Output the following json format:
 ```
