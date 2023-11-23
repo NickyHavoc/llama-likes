@@ -1,10 +1,5 @@
-from typing import Any, Mapping
-
-from llama_likes.core.core import PayoffLabels
-
-# the llama2 instance used here is hosted by somebody somewhere
-# docs are terribly & function calling doesn't work
-# looking to change this, once a better alternative is available
+from ..core.core import PayoffLabels
+from ..core.huggingface_client import HuggingfaceClient
 
 LLAMA_PAYOFF_LABELS = PayoffLabels(
     player_a_wins="completion_a",
@@ -36,11 +31,11 @@ completion_b:
 {completion_b}"""
 
 
-def build_llama_request(
-    instruction: str, completion_a: str, completion_b: str, model: str
-) -> Mapping[str, Any]:
-    return {
-        "messages": [
+def build_prompt(
+    instruction: str, completion_a: str, completion_b: str, client: HuggingfaceClient
+) -> str:
+    return client.messages_to_prompt(
+        [
             _system_message,
             {
                 "role": "user",
@@ -50,11 +45,5 @@ def build_llama_request(
                     completion_b=completion_b,
                 ),
             },
-        ],
-        "model": model
-        # these parameters, while they would be great, appear to have no effect
-        # API is terribly documented, no idea which parameters are available
-        # "temperature": 0,
-        # "max_length": 50,
-        # "stop": "}",
-    }
+        ]
+    )

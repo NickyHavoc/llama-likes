@@ -1,4 +1,16 @@
-from llama_likes import Completion, OpenaiRanker, Payoff, PreferenceResult
+from pytest import fixture
+
+from llama_likes import Completion, Model, OpenaiRanker, Payoff, PreferenceResult
+
+
+@fixture
+def openai_model() -> Model:
+    return Model.GPT_3_5
+
+
+@fixture
+def openai_ranker(openai_model: Model) -> OpenaiRanker:
+    return OpenaiRanker(openai_model)
 
 
 def test_openai_ranker_true_positive(

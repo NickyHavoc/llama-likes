@@ -1,4 +1,16 @@
-from llama_likes import Completion, LlamaRanker, Payoff, PreferenceResult
+from pytest import fixture
+
+from llama_likes import Completion, LlamaRanker, Model, Payoff, PreferenceResult
+
+
+@fixture
+def llama_model() -> Model:
+    return Model.LLAMA_13B_CHAT
+
+
+@fixture
+def llama_ranker(llama_model: Model) -> LlamaRanker:
+    return LlamaRanker(llama_model)
 
 
 def test_llama_ranker_true_positive(

@@ -36,7 +36,7 @@ completion_b:
 {completion_b}"""
 
 
-def build_openai_prompt(
+def build_prompt(
     instruction: str, completion_a: str, completion_b: str
 ) -> Sequence[Mapping[str, str]]:
     return [
