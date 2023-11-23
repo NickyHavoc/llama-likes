@@ -56,7 +56,7 @@ class HuggingfaceClient:
 
     def messages_to_prompt(self, messages: Sequence[Mapping[str, str]]) -> str:
         """Convert a messages object (OpenAI-format) into a prompt string.
-        
+
         For some models, like Mistral's, the first message must be by the user.
         Others, like Llama2, allow for system prompts.
         """

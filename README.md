@@ -1,4 +1,4 @@
-# Use LLMs to preference label other LLM's completions
+# Llamas like llama things
 
 "Humans are not the SOTA annotators anymore"
 
