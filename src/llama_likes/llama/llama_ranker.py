@@ -4,6 +4,7 @@ from ..core.core import (
     Completion,
     HuggingfaceModel,
     PreferenceError,
+    PreferenceInput,
     PreferenceResult,
     Ranker,
 )
@@ -23,19 +24,19 @@ class LlamaRanker(Ranker):
         self.huggingface_client = HuggingfaceClient(model)
 
     def rank(
-        self, instruction: str, completion_a: Completion, completion_b: Completion
+        self, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         prompt = build_prompt(
-            instruction,
-            completion_a.completion,
-            completion_b.completion,
+            preference_input.instruction,
+            preference_input.completion_a.completion,
+            preference_input.completion_b.completion,
             self.huggingface_client,
         )
         request = self._build_request(prompt)
         response = self._call_api(request)
         if isinstance(response, PreferenceError):
             return response
-        return self._to_result(response, completion_a, completion_b)
+        return self._to_result(response, preference_input)
 
     @staticmethod
     def _build_request(prompt: str) -> HuggingfaceCompletionRequest:
@@ -49,12 +50,11 @@ class LlamaRanker(Ranker):
 
     @staticmethod
     def _to_result(
-        response: str, completion_a: Completion, completion_b: Completion
+        response: str, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         try:
             return PreferenceResult(
-                completion_a=completion_a,
-                completion_b=completion_b,
+                preference_input=preference_input,
                 payoff=LLAMA_PAYOFF_LABELS.payoff_from_string(response),
             )
         except Exception as e:

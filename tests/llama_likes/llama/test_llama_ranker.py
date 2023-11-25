@@ -1,10 +1,10 @@
 from pytest import fixture
 
 from llama_likes import (
-    Completion,
     HuggingfaceModel,
     LlamaRanker,
     Payoff,
+    PreferenceInput,
     PreferenceResult,
 )
 
@@ -20,9 +20,9 @@ def llama_ranker(llama_model: HuggingfaceModel) -> LlamaRanker:
 
 
 def test_llama_ranker_true_positive(
-    llama_ranker: LlamaRanker, labeling_example: tuple[str, Completion, Completion]
+    llama_ranker: LlamaRanker, labeling_example: PreferenceInput
 ) -> None:
-    ranking = llama_ranker.rank(*labeling_example)
+    ranking = llama_ranker.rank(labeling_example)
 
     assert isinstance(ranking, PreferenceResult)
     assert ranking.payoff == Payoff.PLAYER_A_WINS

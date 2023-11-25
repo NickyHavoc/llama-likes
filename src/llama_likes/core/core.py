@@ -29,6 +29,12 @@ class Completion(BaseModel):
     completion: str
 
 
+class PreferenceInput(BaseModel):
+    instruction: str
+    completion_a: Completion
+    completion_b: Completion
+
+
 class Payoff(Enum):
     PLAYER_A_WINS = (1, 0)
     DRAW = (0.5, 0.5)
@@ -66,8 +72,7 @@ class PreferenceError(BaseModel):
 
 
 class PreferenceResult(BaseModel):
-    completion_a: Completion
-    completion_b: Completion
+    preference_input: PreferenceInput
     payoff: Payoff
 
 
@@ -77,7 +82,7 @@ R = TypeVar("R")
 class Ranker(ABC):
     @abstractmethod
     def rank(
-        self, instruction: str, completion_a: Completion, completion_b: Completion
+        self, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         ...
 

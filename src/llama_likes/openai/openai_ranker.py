@@ -10,6 +10,7 @@ from ..core.core import (
     Completion,
     OpenaiModel,
     PreferenceError,
+    PreferenceInput,
     PreferenceResult,
     Ranker,
 )
@@ -23,19 +24,21 @@ class OpenaiRanker(Ranker):
         self.model = model.value
 
     def rank(
-        self, instruction: str, completion_a: Completion, completion_b: Completion
+        self, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         prompt = build_prompt(
-            instruction, completion_a.completion, completion_b.completion
+            preference_input.instruction,
+            preference_input.completion_a.completion,
+            preference_input.completion_b.completion,
         )
         response = self._call_api(prompt)
         if isinstance(response, PreferenceError):
             return response
-        return self._to_result(response, completion_a, completion_b)
+        return self._to_result(response, preference_input)
 
     @Ranker.retry_with_backoff()
     def _call_api(
-        self, messages: Sequence[Mapping[str, str]], max_retries: int = 5
+        self, messages: Sequence[Mapping[str, str]]
     ) -> Union[ChatCompletion, PreferenceError]:
         response = openai.chat.completions.create(
             model=self.model,
@@ -57,7 +60,7 @@ class OpenaiRanker(Ranker):
 
     @staticmethod
     def _to_result(
-        response: ChatCompletion, completion_a: Completion, completion_b: Completion
+        response: ChatCompletion, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         try:
             content = response.choices[0].message.content
@@ -65,8 +68,7 @@ class OpenaiRanker(Ranker):
                 raise TypeError(f"Expected content to be string, got {type(content)}.")
             loaded = json.loads(content)
             return PreferenceResult(
-                completion_a=completion_a,
-                completion_b=completion_b,
+                preference_input=preference_input,
                 payoff=OPENAI_PAYOFF_LABELS.payoff_from_json(loaded),
             )
         except Exception as e:

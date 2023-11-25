@@ -2,7 +2,7 @@ from typing import Sequence
 
 from pytest import fixture
 
-from llama_likes import Completion, Elo, Payoff, PreferenceResult
+from llama_likes import Completion, Elo, Payoff, PreferenceInput, PreferenceResult
 from llama_likes.elo import elo_simulation
 
 PLAYER_A_NAME = "p1"
@@ -13,23 +13,51 @@ PLAYER_B_NAME = "p2"
 def preference_results() -> Sequence[PreferenceResult]:
     return [
         PreferenceResult(
-            completion_a=Completion(player_id=PLAYER_A_NAME, completion="Good answer."),
-            completion_b=Completion(player_id=PLAYER_B_NAME, completion="Bad answer."),
+            preference_input=PreferenceInput(
+                instruction="Answer a is better.",
+                completion_a=Completion(
+                    player_id=PLAYER_A_NAME, completion="Good answer."
+                ),
+                completion_b=Completion(
+                    player_id=PLAYER_B_NAME, completion="Bad answer."
+                ),
+            ),
             payoff=Payoff.PLAYER_A_WINS,
         ),
         PreferenceResult(
-            completion_a=Completion(player_id=PLAYER_A_NAME, completion="Ok answer."),
-            completion_b=Completion(player_id=PLAYER_B_NAME, completion="Ok answer."),
+            preference_input=PreferenceInput(
+                instruction="Equally good answers.",
+                completion_a=Completion(
+                    player_id=PLAYER_A_NAME, completion="Ok answer."
+                ),
+                completion_b=Completion(
+                    player_id=PLAYER_B_NAME, completion="Ok answer."
+                ),
+            ),
             payoff=Payoff.DRAW,
         ),
         PreferenceResult(
-            completion_a=Completion(player_id=PLAYER_A_NAME, completion="Bad answer."),
-            completion_b=Completion(player_id=PLAYER_B_NAME, completion="Good answer."),
+            preference_input=PreferenceInput(
+                instruction="Answer b is better.",
+                completion_a=Completion(
+                    player_id=PLAYER_A_NAME, completion="Bad answer."
+                ),
+                completion_b=Completion(
+                    player_id=PLAYER_B_NAME, completion="Good answer."
+                ),
+            ),
             payoff=Payoff.PLAYER_B_WINS,
         ),
         PreferenceResult(
-            completion_a=Completion(player_id=PLAYER_A_NAME, completion="Good answer."),
-            completion_b=Completion(player_id=PLAYER_B_NAME, completion="Bad answer."),
+            preference_input=PreferenceInput(
+                instruction="Answer a is better.",
+                completion_a=Completion(
+                    player_id=PLAYER_A_NAME, completion="Good answer."
+                ),
+                completion_b=Completion(
+                    player_id=PLAYER_B_NAME, completion="Bad answer."
+                ),
+            ),
             payoff=Payoff.PLAYER_A_WINS,
         ),
     ]

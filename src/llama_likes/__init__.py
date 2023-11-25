@@ -6,6 +6,7 @@ from .core.core import (
     Payoff,
     PayoffLabels,
     PreferenceError,
+    PreferenceInput,
     PreferenceResult,
     Ranker,
 )
@@ -21,6 +22,7 @@ __all__ = [
     "OpenaiModel",
     "Payoff",
     "PayoffLabels",
+    "PreferenceInput",
     "PreferenceError",
     "PreferenceResult",
     "Ranker",

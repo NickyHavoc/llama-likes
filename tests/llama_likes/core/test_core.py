@@ -2,14 +2,14 @@ from typing import Union
 
 import pytest
 
-from llama_likes import Completion, PreferenceError, PreferenceResult, Ranker
+from llama_likes import PreferenceError, PreferenceInput, PreferenceResult, Ranker
 
 MAX_RETRIES = 3
 
 
 class DummyRanker(Ranker):
     def rank(
-        self, instruction: str, completion_a: Completion, completion_b: Completion
+        self, preference_input: PreferenceInput
     ) -> Union[PreferenceResult, PreferenceError]:
         return PreferenceError()
 

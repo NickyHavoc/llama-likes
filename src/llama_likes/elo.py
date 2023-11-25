@@ -17,7 +17,10 @@ def elo_simulation(
         return set(
             p
             for r in preference_results
-            for p in [r.completion_a.player_id, r.completion_b.player_id]
+            for p in [
+                r.preference_input.completion_a.player_id,
+                r.preference_input.completion_b.player_id,
+            ]
         )
 
     players = get_players()
@@ -45,8 +48,8 @@ class Elo:
             self.calculate(result)
 
     def calculate(self, preference_result: PreferenceResult) -> None:
-        player_a = preference_result.completion_a.player_id
-        player_b = preference_result.completion_b.player_id
+        player_a = preference_result.preference_input.completion_a.player_id
+        player_b = preference_result.preference_input.completion_b.player_id
 
         expected_win_rate_a, expected_win_rate_b = self._calculate_expected_win_rates(
             player_a, player_b
