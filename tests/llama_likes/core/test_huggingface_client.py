@@ -2,17 +2,17 @@ from typing import Mapping, Sequence
 
 from pytest import fixture
 
-from llama_likes import HuggingfaceClient, Model
+from llama_likes import HuggingfaceClient, HuggingfaceModel
 from llama_likes.core.huggingface_client import HuggingfaceCompletionRequest
 
 
 @fixture
-def mistral_model() -> Model:
-    return Model.MISTRAL_7B_INSTRUCT
+def mistral_model() -> HuggingfaceModel:
+    return HuggingfaceModel.MISTRAL_7B_INSTRUCT
 
 
 @fixture
-def huggingface_client(mistral_model: Model) -> HuggingfaceClient:
+def huggingface_client(mistral_model: HuggingfaceModel) -> HuggingfaceClient:
     return HuggingfaceClient(mistral_model)
 
 

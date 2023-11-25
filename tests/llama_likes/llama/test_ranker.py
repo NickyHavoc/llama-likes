@@ -1,7 +1,8 @@
 from typing import Union
-import pytest
-from llama_likes import Ranker, Completion, PreferenceResult, PreferenceError
 
+import pytest
+
+from llama_likes import Completion, PreferenceError, PreferenceResult, Ranker
 
 MAX_RETRIES = 3
 
@@ -15,7 +16,7 @@ class DummyRanker(Ranker):
     @Ranker.retry_with_backoff(max_retries=MAX_RETRIES, base_delay=0.01, max_delay=1)
     def fails_and_catches_error(self) -> None:
         raise TimeoutError("Fake Timeout")
-    
+
     @Ranker.retry_with_backoff()
     def fails_and_raises(self) -> None:
         raise BaseException()

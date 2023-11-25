@@ -1,15 +1,21 @@
 from pytest import fixture
 
-from llama_likes import Completion, LlamaRanker, Model, Payoff, PreferenceResult
+from llama_likes import (
+    Completion,
+    HuggingfaceModel,
+    LlamaRanker,
+    Payoff,
+    PreferenceResult,
+)
 
 
 @fixture
-def llama_model() -> Model:
-    return Model.LLAMA_13B_CHAT
+def llama_model() -> HuggingfaceModel:
+    return HuggingfaceModel.LLAMA_13B_CHAT
 
 
 @fixture
-def llama_ranker(llama_model: Model) -> LlamaRanker:
+def llama_ranker(llama_model: HuggingfaceModel) -> LlamaRanker:
     return LlamaRanker(llama_model)
 
 

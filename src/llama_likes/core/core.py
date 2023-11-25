@@ -10,9 +10,16 @@ from pydantic import BaseModel
 class Model(Enum):
     """Model enum to list available models and the path to them."""
 
+    pass
+
+
+class HuggingfaceModel(Model):
     MISTRAL_7B_INSTRUCT = "mistralai/Mistral-7B-Instruct-v0.1"
     LLAMA_13B_CHAT = "meta-llama/Llama-2-13b-chat-hf"
     LLAMA_70B_CHAT = "meta-llama/Llama-2-70b-chat-hf"
+
+
+class OpenaiModel(Model):
     GPT_3_5 = "gpt-3.5-turbo-1106"
     GPT_4 = "gpt-4-1106-preview"
 
@@ -109,7 +116,6 @@ class Ranker(ABC):
                         error_trace.append(str(e))
                         time.sleep(next(retry_delays))
                     except Exception as e:
-                        error_trace.append(str(e))
                         raise e
                 return PreferenceError(error_messages=error_trace)
 

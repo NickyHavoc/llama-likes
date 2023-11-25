@@ -6,14 +6,20 @@ import openai
 from dotenv import load_dotenv
 from openai.types.chat import ChatCompletion
 
-from ..core.core import Completion, Model, PreferenceError, PreferenceResult, Ranker
+from ..core.core import (
+    Completion,
+    OpenaiModel,
+    PreferenceError,
+    PreferenceResult,
+    Ranker,
+)
 from .build_openai_prompt import OPENAI_PAYOFF_LABELS, build_prompt
 
 load_dotenv()
 
 
 class OpenaiRanker(Ranker):
-    def __init__(self, model: Model) -> None:
+    def __init__(self, model: OpenaiModel) -> None:
         self.model = model.value
 
     def rank(

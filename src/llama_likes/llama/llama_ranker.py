@@ -1,6 +1,12 @@
 from typing import Union
 
-from ..core.core import Completion, Model, PreferenceError, PreferenceResult, Ranker
+from ..core.core import (
+    Completion,
+    HuggingfaceModel,
+    PreferenceError,
+    PreferenceResult,
+    Ranker,
+)
 from ..core.huggingface_client import HuggingfaceClient, HuggingfaceCompletionRequest
 from .build_llama_request import LLAMA_PAYOFF_LABELS, build_prompt
 
@@ -13,7 +19,7 @@ class LlamaRanker(Ranker):
     including 'llama-70b-chat', 'mistral-7b-instruct' and 'falcon-40b-instruct'.
     """
 
-    def __init__(self, model: Model) -> None:
+    def __init__(self, model: HuggingfaceModel) -> None:
         self.huggingface_client = HuggingfaceClient(model)
 
     def rank(

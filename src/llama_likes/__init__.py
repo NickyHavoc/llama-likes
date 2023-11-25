@@ -1,6 +1,8 @@
 from .core.core import (
     Completion,
+    HuggingfaceModel,
     Model,
+    OpenaiModel,
     Payoff,
     PayoffLabels,
     PreferenceError,
@@ -15,6 +17,8 @@ from .openai.openai_ranker import OpenaiRanker
 __all__ = [
     "Completion",
     "Model",
+    "HuggingfaceModel",
+    "OpenaiModel",
     "Payoff",
     "PayoffLabels",
     "PreferenceError",

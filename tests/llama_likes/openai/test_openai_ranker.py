@@ -1,15 +1,15 @@
 from pytest import fixture
 
-from llama_likes import Completion, Model, OpenaiRanker, Payoff, PreferenceResult
+from llama_likes import Completion, OpenaiModel, OpenaiRanker, Payoff, PreferenceResult
 
 
 @fixture
-def openai_model() -> Model:
-    return Model.GPT_3_5
+def openai_model() -> OpenaiModel:
+    return OpenaiModel.GPT_3_5
 
 
 @fixture
-def openai_ranker(openai_model: Model) -> OpenaiRanker:
+def openai_ranker(openai_model: OpenaiModel) -> OpenaiRanker:
     return OpenaiRanker(openai_model)
 
 
