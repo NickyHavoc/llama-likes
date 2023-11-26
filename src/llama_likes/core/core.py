@@ -15,6 +15,7 @@ class Model(Enum):
 
 class HuggingfaceModel(Model):
     MISTRAL_7B_INSTRUCT = "mistralai/Mistral-7B-Instruct-v0.1"
+    LLAMA_7B_CHAT = "meta-llama/Llama-2-7b-chat-hf"
     LLAMA_13B_CHAT = "meta-llama/Llama-2-13b-chat-hf"
     LLAMA_70B_CHAT = "meta-llama/Llama-2-70b-chat-hf"
 

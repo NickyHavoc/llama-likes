@@ -11,7 +11,7 @@ from llama_likes import (
 
 @fixture
 def llama_model() -> HuggingfaceModel:
-    return HuggingfaceModel.LLAMA_13B_CHAT
+    return HuggingfaceModel.LLAMA_7B_CHAT
 
 
 @fixture
